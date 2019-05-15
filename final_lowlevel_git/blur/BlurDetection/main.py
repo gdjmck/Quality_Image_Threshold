@@ -22,10 +22,10 @@ def evaluate(img_col, args):
     assert isinstance(args, argparse.Namespace), 'args must be of type argparse.Namespace not {0}'.format(type(args))
     img_gry = cv2.cvtColor(img_col, cv2.COLOR_RGB2GRAY)
     rows, cols = img_gry.shape
-    crow, ccol = rows/2, cols/2
+    crow, ccol = rows//2, cols//2
     f = numpy.fft.fft2(img_gry)
     fshift = numpy.fft.fftshift(f)
-    fshift[crow-75:crow+75, ccol-75:ccol+75] = 0
+    fshift[crow-75:crow+75, ccol-75:ccol+75] = 0 # 频谱图中的半径应该跟频率个数相关
     f_ishift = numpy.fft.ifftshift(fshift)
     img_fft = numpy.fft.ifft2(f_ishift)
     img_fft = 20*numpy.log(numpy.abs(img_fft))
