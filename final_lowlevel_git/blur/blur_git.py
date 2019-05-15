@@ -11,7 +11,7 @@ img_path = input("Please Enter Image Path: ")
 assert os.path.exists(img_path), "img_path does not exists"
 '''
 args = scripts.get_args()
-img_path = args.image_paths
+img_path = args.image_paths[-1]
 
 image_data1 = glob.glob(img_path + '/*.jpg')
 unblur, blur = [], []
