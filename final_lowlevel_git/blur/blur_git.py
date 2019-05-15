@@ -24,6 +24,7 @@ for i in image_data1:
     img2 = cv2.imread(i.replace('blur0', 'blur1'))
     img_fft2, val2, blurry2 = BlurDetection.blur_detector(img2)
     blur.append(val2)
+    print(i, '\t original: %.3f\tblur: %.3f'%(val1, val2))
     #print(a)
     #print(blurry)
     '''
@@ -32,5 +33,5 @@ for i in image_data1:
     else:
         shutil.move(i, '/home/chk/Documents/data/train_code/URL_image/blur_test/not_blur')
     '''
-    print("{0} {1} blurry".format(i, ["isn't", "is"][blurry]))
+    #print("{0} {1} blurry".format(i, ["isn't", "is"][blurry]))
 
