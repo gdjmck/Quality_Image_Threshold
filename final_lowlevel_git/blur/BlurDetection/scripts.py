@@ -13,7 +13,16 @@ import numpy
 # Custom Modules
 
 logger = logging.getLogger('main')
-
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('image_paths', type=str, nargs='+', help="Filepath for input images or folder containing images")
+parser.add_argument('-p', '--superpixel', dest='superpixel', action='store_true', help='generate blur estimation for superpixels')
+parser.add_argument('-r', '--thresh', dest='thresh', default=10, type=str, help='threshold for deciding if blurry (between 0 & 1)')
+parser.add_argument('-m', '--mask', dest='mask', action='store_true', help='Conduct SLIC Segmentation to generate focus mask')
+parser.add_argument('-d', '--display', dest='display', action='store_true', help='display image steps')
+parser.add_argument('-e', '--debug', dest='debug', action='store_true', help='set logger to debug')
+parser.add_argument('-q', '--quite', dest='quite', action='store_true', help='silence the logger')
+parser.add_argument('-s', '--save', dest='save', action='store_true', help='save blur masks')
+parser.add_argument('-t', '--testing', dest='testing', action='store_true', help='enable testing method')
 
 def get_logger(level=logging.INFO, quite=False, debug=False, to_file=''):
     """
@@ -47,16 +56,7 @@ def get_args(default=None, args_string=''):
     """
     if not default:
         default = {}
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('image_paths', type=str, nargs='+', help="Filepath for input images or folder containing images")
-    parser.add_argument('-p', '--superpixel', dest='superpixel', action='store_true', help='generate blur estimation for superpixels')
-    parser.add_argument('-r', '--thresh', dest='thresh', default=10, type=str, help='threshold for deciding if blurry (between 0 & 1)')
-    parser.add_argument('-m', '--mask', dest='mask', action='store_true', help='Conduct SLIC Segmentation to generate focus mask')
-    parser.add_argument('-d', '--display', dest='display', action='store_true', help='display image steps')
-    parser.add_argument('-e', '--debug', dest='debug', action='store_true', help='set logger to debug')
-    parser.add_argument('-q', '--quite', dest='quite', action='store_true', help='silence the logger')
-    parser.add_argument('-s', '--save', dest='save', action='store_true', help='save blur masks')
-    parser.add_argument('-t', '--testing', dest='testing', action='store_true', help='enable testing method')
+    global parser
     if args_string:
         args_string = args_string.split(' ')
         args = parser.parse_args(args_string)
