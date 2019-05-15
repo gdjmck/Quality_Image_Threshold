@@ -1,17 +1,24 @@
 import os
 import cv2
 import numpy
-import BlurDetection
-import BlurDetection.scripts
 import glob
 import shutil
+
+import sys
+missing_path = '/home/dev/program/jupyter_notebook/Quality_Image_Threshold/final_lowlevel_git/blur/BlurDetection'
+sys.path.append(missing_path)
+print('Add ', missing_path)
+import BlurDetection
 
 '''
 img_path = input("Please Enter Image Path: ")
 assert os.path.exists(img_path), "img_path does not exists"
 '''
-args = BlurDetection.scripts.get_args()
+'''
+'''
+args = BlurDetection.parser.parse_args()
 img_path = args.image_paths[-1]
+print('img_path', img_path)
 
 image_data1 = glob.glob(img_path + '/*.jpg')
 unblur, blur = [], []

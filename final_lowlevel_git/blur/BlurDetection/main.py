@@ -9,7 +9,7 @@ import argparse
 import cv2
 import numpy
 # Custom modules
-import scripts
+import BlurDetection.scripts as scripts
 import FocusMask
 
 logger = logging.getLogger('main')
