@@ -11,8 +11,7 @@ import skimage
 import skimage.measure
 import skimage.segmentation
 # Custom modules
-import main
-import scripts
+import BlurDetection
 
 logger = logging.getLogger('main')
 
@@ -38,7 +37,7 @@ def blur_mask_old(img):
     for mask, loc in get_masks(img):
         logger.debug('Checking Mask: {0}'.format(numpy.unique(mask)))
         logger.debug('SuperPixel Mask Percentage: {0}%'.format(int((100.0/255.0)*(numpy.sum(mask)/mask.size))))
-        img_fft, val, blurry = main.blur_detector(img[loc[0]:loc[2], loc[1]:loc[3]])
+        img_fft, val, blurry = BlurDetection.blur_detector(img[loc[0]:loc[2], loc[1]:loc[3]])
         logger.debug('Blurry: {0}'.format(blurry))
         if blurry:
             blur_mask = cv2.add(blur_mask, mask)
@@ -74,7 +73,7 @@ def remove_border(msk, width=50):
 def blur_mask(img):
     assert isinstance(img, numpy.ndarray), 'img_col must be a numpy array'
     assert img.ndim == 3, 'img_col must be a color image ({0} dimensions currently)'.format(img.ndim)
-    msk, val, blurry = main.blur_detector(img)
+    msk, val, blurry = BlurDetection.blur_detector(img)
     logger.debug('inverting img_fft')
     msk = cv2.convertScaleAbs(255-(255*msk/numpy.max(msk)))
     msk[msk < 50] = 0
@@ -93,6 +92,6 @@ if __name__ == '__main__':
     img_path = raw_input("Please Enter Image Path: ")
     img = cv2.imread(img_path)
     msk, val = blur_mask(img)
-    scripts.display('img', img)
-    scripts.display('msk', msk)
+    BlurDetection.display('img', img)
+    BlurDetection.display('msk', msk)
     cv2.waitKey(0)
