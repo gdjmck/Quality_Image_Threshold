@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy
 import BlurDetection
+import BlurDetection.scripts
 import glob
 import shutil
 
